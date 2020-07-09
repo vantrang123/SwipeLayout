@@ -87,10 +87,6 @@ public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.ItemHolder> {
             parentLayoutItem0.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
                 @Override
                 public void onOpen(int direction, boolean isContinuous) {
-                    if (lastPositionOpened != -1 && lastPositionOpened != getAdapterPosition()) {
-                        swipeListener.onCloseLastSwipe(lastPositionOpened);
-                    }
-                    lastPositionOpened = getAdapterPosition();
                     parentLayoutItem0.getSurfaceView().setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -98,7 +94,7 @@ public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.ItemHolder> {
                             lastPositionOpened = -1;
                         }
                     });
-
+                    lastPositionOpened = getAdapterPosition();
                 }
 
                 @Override
@@ -109,7 +105,14 @@ public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.ItemHolder> {
                             clickItem(itemView.getContext(), getAdapterPosition());
                         }
                     });
+
+                    if (lastPositionOpened != -1 && lastPositionOpened != getAdapterPosition()) {
+                        swipeListener.onCloseLastSwipe(lastPositionOpened);
+                    }
+
                 }
+
+
 
             });
 
